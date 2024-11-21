@@ -22,6 +22,15 @@ mypy = "^1.13.0"
 pytest = "^8.3.3"
 pytest-snapshot = "^0.9.0"
 
+[tool.mypy]
+python_version = "3.8"
+files = "**/*.py"
+warn_unused_configs = true
+namespace_packages = true
+check_untyped_defs = true
+warn_redundant_casts = true
+warn_unreachable = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

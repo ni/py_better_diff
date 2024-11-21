@@ -1,7 +1,7 @@
 import pathlib
 
 import pytest
-import pytest_snapshot.plugin
+import pytest_snapshot.plugin  # type: ignore[import]
 
 import better_diff
 
