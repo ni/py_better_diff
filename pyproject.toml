@@ -22,6 +22,19 @@ mypy = "^1.13.0"
 pytest = "^8.3.3"
 pytest-snapshot = "^0.9.0"
 
+
+[tool.poetry.group.tooling.dependencies]
+poethepoet = "^0.30.0"
+
+[tool.poe.tasks]
+nps-fix = "nps fix"
+_nps = "nps lint"
+mypy = "mypy"
+lint = ["_nps", "mypy"]
+test = "pytest"
+all = ["nps-fix", "lint", "test"]
+
+
 [tool.mypy]
 python_version = "3.8"
 files = "**/*.py"
