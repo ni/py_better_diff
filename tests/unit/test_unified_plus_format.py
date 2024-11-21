@@ -1,19 +1,23 @@
 import textwrap
+import typing
 
 import pytest
 
-import tests
 from better_diff import unified_plus
+
+
+class _UnitDiffCase(typing.NamedTuple):
+    a: str
+    b: str
+    expected: str
 
 
 @pytest.mark.parametrize(
     ["a", "b", "expected"],
     [
+        pytest.param(*_UnitDiffCase(a="a\nb\n", b="a\nb\n", expected=""), id="no diff"),
         pytest.param(
-            *tests._UnitDiffCase(a="a\nb\n", b="a\nb\n", expected=""), id="no diff"
-        ),
-        pytest.param(
-            *tests._UnitDiffCase(
+            *_UnitDiffCase(
                 a="a\n1234\n",
                 b="a\n456\n",
                 expected="--- a\n+++ b\n@@ -1,2 +1,2 @@\n a\n-1234\n+456\n",
@@ -21,7 +25,7 @@ from better_diff import unified_plus
             id="line-subst",
         ),
         pytest.param(
-            *tests._UnitDiffCase(
+            *_UnitDiffCase(
                 a="a\na string with trailing whitespace  \n",
                 b="a\na string with trailing whitespace\n",
                 expected=textwrap.dedent(
@@ -39,7 +43,7 @@ from better_diff import unified_plus
             id="trailing-whitespace",
         ),
         pytest.param(
-            *tests._UnitDiffCase(
+            *_UnitDiffCase(
                 a=textwrap.dedent(
                     """\
                 a long string
@@ -57,7 +61,7 @@ from better_diff import unified_plus
             id="trailing-whitespace-at-end",
         ),
         pytest.param(
-            *tests._UnitDiffCase(
+            *_UnitDiffCase(
                 a=textwrap.dedent(
                     """\
                 a long string

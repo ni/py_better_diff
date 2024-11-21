@@ -2,8 +2,10 @@
 name = "better_diff"
 version = "0.1.0"
 description = "A simple library for printing better diffs based on the stdlib unified_diff format."
+authors = ["Matthew Shafer <23644905+mshafer-NI@users.noreply.github.com>", "NI <opensource@ni.com>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/ni/better_diff/"
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
