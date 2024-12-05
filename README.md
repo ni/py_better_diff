@@ -1,15 +1,52 @@
-# GitHub Repo Template
+# Better-Diff
 
-GitHub Repo Template is a template for creation of open source projects made
-available on GitHub. It includes a permissive open source license, a developer
-certificate of origin, and a pull request template. This provides everything
-necessary to have a properly licensed open source project.
 
-## Using GitHub Repo Template
+## The problem we're solving:
+Why is my code linting tool telling me there's a difference here?
 
-1. Clone or download this repository.
-2. Copy its contents into your project (including the hidden .github directory). 
-3. Customize each file to suit your project's needs (including the README). Look through the files for "TODO" and \<reponame\>, and replace with content appropriate to your project.
-4. (Optional) Check out [GitHub Template Guidelines](https://github.com/cezaraugusto/github-template-guidelines) for ideas about how to customize your project.
+```diff
+--- a
++++ b
+@@ -1,6 +1,6 @@
+-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
++Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+ incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+ nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+```
 
-TODO: describe a project in detail, what it does, how to use it, etc.
+With a normal unified-diff, trailing whitespace that is removed is not highlighted (depending on how the log is saved, may even be removed...)
+
+Similar issues exist with the last line being an empty line or not:
+
+```diff
+---a
+
++++b
+
+@@ -4,4 +4,3 @@
+
+ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+ fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+ culpa qui officia deserunt mollit anim id est laborum.
+-
+```
+
+What about that line is getting removed?
+
+## Our solution
+
+Write this module to share a wrapper that calls [`difflib.unified_diff`](https://docs.python.org/3/library/difflib.html#difflib.unified_diff) and augments the formatting output with lines to highlight:
+* The difference between the last and the new line is whitespace being removed
+* The difference is the absence of line endings at the end.
+
+```diff
+--- a
++++ b
+@@ -1,3 +1,3 @@
+-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+?                                                                              ^^
++Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+ incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+ nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+\ No newline at end of file (b)
+```
