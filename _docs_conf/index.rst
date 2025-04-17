@@ -1,5 +1,5 @@
-solfege documentation
-=====================
+better_diff documentation
+=========================
 
 .. mdinclude:: ../README.md
 

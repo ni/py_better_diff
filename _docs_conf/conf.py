@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 import autoapi
 
-project = "solfege"
+project = "better_diff"
 copyright = "2025, National Instruments"
 author = "mshafer-ni"
 
