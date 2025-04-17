@@ -49,13 +49,24 @@ jobs:
       - name: Lint the Code
         run: poetry run ni-python-styleguide lint
 
-      - name: Run tests
-        run: poetry run pytest -v
+      - name: Run Checks
+        run: poetry run poe checks
 
       # If the version is 0.1.0-alpha.0, this will set the version to 0.1.0
       - name: Promote package version to release
         run: |
           poetry version patch
+
+      - name: Build the docs
+        run: |
+          poetry run poe docs
+    
+      - name: Commit files
+        if: ${{ github.event.release.target_commitish == 'main' }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Update docs" -a
 
       - name: Build Python package
         if: ${{ github.event.release.target_commitish == 'main' }}
