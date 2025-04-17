@@ -6,6 +6,8 @@ authors = ["Matthew Shafer <23644905+mshafer-NI@users.noreply.github.com>", "NI 
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/ni/py_better_diff/"
+homepage = "https://ni.github.io/py_better_diff/"
+keywords = ["diff", "diff_format", "diff_printer"]
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
