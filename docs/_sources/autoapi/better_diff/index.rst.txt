@@ -1,0 +1,20 @@
+better_diff
+===========
+
+.. py:module:: better_diff
+
+.. autoapi-nested-parse::
+
+   A library for generating better diffs.
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/better_diff/unified_plus/index
+
+

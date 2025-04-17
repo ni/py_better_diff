@@ -1,0 +1,32 @@
+better_diff.unified_plus
+========================
+
+.. py:module:: better_diff.unified_plus
+
+.. autoapi-nested-parse::
+
+   A unified+ format based on the standard difflib.unified_diff.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   better_diff.unified_plus.format_diff
+
+
+Module Contents
+---------------
+
+.. py:function:: format_diff(a, b, fromfile = 'a', tofile = 'b')
+
+   Return a unified+ diff between two strings.
+
+   :param a: The first string to compare.
+   :param b: The second string to compare.
+   :param fromfile: The name of the first file.
+   :param tofile: The name of the second file.
+
+
