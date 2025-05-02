@@ -10,7 +10,7 @@ homepage = "https://ni.github.io/py_better_diff/"
 keywords = ["diff", "diff_format", "diff_printer"]
 
 [tool.poetry.dependencies]
-python = "^3.8.1"
+python = "^3.8"
 
 [tools.black]
 line-length=100
