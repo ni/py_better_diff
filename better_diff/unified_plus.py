@@ -15,10 +15,12 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
     """
     result = []
     last_line: typing.Optional[str] = None
-    normalized_endings_a, normalized_endings_b = (
-        a.rstrip("\r\n") + "\n",
-        b.rstrip("\r\n") + "\n",
-    )
+
+    normalized_endings_a, normalized_endings_b = (a.rstrip("\r\n"), b.rstrip("\r\n"))
+    no_newline_message = "\n\\ Newline at end of file"
+    normalized_endings_a += no_newline_message * (len(a) - len(normalized_endings_a))
+    normalized_endings_b += no_newline_message * (len(b) - len(normalized_endings_b))
+
     for line in difflib.unified_diff(
         a=normalized_endings_a.splitlines(),
         b=normalized_endings_b.splitlines(),
@@ -42,12 +44,6 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
 
         result.append(line.rstrip())
         last_line = line
-
-    if a != b:
-        if a.rstrip("\r\n") == a:
-            result.append(f"\\ No newline at end of file ({fromfile})")
-        if b.rstrip("\r\n") == b:
-            result.append(f"\\ No newline at end of file ({tofile})")
 
     if not result:
         return ""
