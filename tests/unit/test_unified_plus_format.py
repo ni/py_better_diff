@@ -75,7 +75,8 @@ class _UnitDiffCase(typing.NamedTuple):
                     that spans multiple lines
                     and ends with a newline"""
                 ),
-                expected=textwrap.dedent("""\
+                expected=textwrap.dedent(
+                    """\
                     --- a
                     +++ b
                     @@ -1,4 +1,3 @@
@@ -83,7 +84,8 @@ class _UnitDiffCase(typing.NamedTuple):
                      that spans multiple lines
                      and ends with a newline
                     -\\ Newline at end of file
-                    """),
+                    """
+                ),
             ),
             id="no-trailing-newline",
         ),
