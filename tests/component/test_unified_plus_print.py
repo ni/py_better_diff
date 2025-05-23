@@ -18,5 +18,7 @@ def test___test_case___unified_plus_format___matches_snapshot(
     a = (test_case / "a.txt").read_text()
     b = (test_case / "b.txt").read_text()
 
+    result = better_diff.unified_plus.format_diff(a, b, fromfile="a.txt", tofile="b.txt")
+
     snapshot.snapshot_dir = test_case
-    snapshot.assert_match(better_diff.unified_plus.format_diff(a, b), "expected.diff")
+    snapshot.assert_match(result, "expected.diff")
