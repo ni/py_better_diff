@@ -40,7 +40,6 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
                     doing_a_substitution,
                     last_line_had_dangling_whitespace,
                     new_line_is_last_line_without_whitespace,
-                    # differing_whitespace_is_dangling,
                 ]
             ):
                 highlight = "^" * (len(last_line) - len(last_line.rstrip()))
