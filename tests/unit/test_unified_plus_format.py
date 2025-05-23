@@ -56,7 +56,7 @@ class _UnitDiffCase(typing.NamedTuple):
                 that spans multiple lines
                 and has trailing whitespace at the end"""
                 ),
-                expected="--- a\n+++ b\n@@ -1,3 +1,3 @@\n a long string\n that spans multiple lines\n-and has trailing whitespace at the end\n?                                      ^^\n+and has trailing whitespace at the end\n\\ No newline at end of file (a)\n\\ No newline at end of file (b)\n",
+                expected="--- a\n+++ b\n@@ -1,3 +1,3 @@\n a long string\n that spans multiple lines\n-and has trailing whitespace at the end\n?                                      ^^\n+and has trailing whitespace at the end\n",
             ),
             id="trailing-whitespace-at-end",
         ),
@@ -64,18 +64,26 @@ class _UnitDiffCase(typing.NamedTuple):
             *_UnitDiffCase(
                 a=textwrap.dedent(
                     """\
-                a long string
-                that spans multiple lines
-                and ends with a newline
+                    a long string
+                    that spans multiple lines
+                    and ends with a newline
                 """
                 ),
                 b=textwrap.dedent(
                     """\
-                a long string
-                that spans multiple lines
-                and ends with a newline"""
+                    a long string
+                    that spans multiple lines
+                    and ends with a newline"""
                 ),
-                expected="\\ No newline at end of file (b)\n",
+                expected=textwrap.dedent("""\
+                    --- a
+                    +++ b
+                    @@ -1,4 +1,3 @@
+                     a long string
+                     that spans multiple lines
+                     and ends with a newline
+                    -\\ Newline at end of file
+                    """),
             ),
             id="no-trailing-newline",
         ),
