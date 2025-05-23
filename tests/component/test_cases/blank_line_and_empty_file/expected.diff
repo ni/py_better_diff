@@ -1,5 +1,5 @@
---- a
-+++ b
+--- a.txt
++++ b.txt
 @@ -1,2 +0,0 @@
 -
 -\ Newline at end of file
