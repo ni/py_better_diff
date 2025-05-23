@@ -17,13 +17,13 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
     last_line: typing.Optional[str] = None
 
     normalized_endings_a, normalized_endings_b = (a.rstrip("\r\n"), b.rstrip("\r\n"))
-    no_newline_message = "\n\\ Newline at end of file"
+    newline_difference_message = "\n\\ Newline at end of file"
 
     len_a_difference = len(a) - len(normalized_endings_a)
     len_b_difference = len(b) - len(normalized_endings_b)
     if len_a_difference != len_b_difference:
-        normalized_endings_a += no_newline_message * (len(a) - len(normalized_endings_a))
-        normalized_endings_b += no_newline_message * (len(b) - len(normalized_endings_b))
+        normalized_endings_a += newline_difference_message * (len(a) - len(normalized_endings_a))
+        normalized_endings_b += newline_difference_message * (len(b) - len(normalized_endings_b))
 
     for line in difflib.unified_diff(
         a=normalized_endings_a.splitlines(),
