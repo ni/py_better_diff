@@ -77,11 +77,13 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
 
 
 def _highlight_dangling_whitespace(result, last_line, line):
+    """Insert a highlight line for dangling whitespace."""
     highlight = "^" * (len(last_line) - len(last_line.rstrip()))
     result.append("?" + " " * (len(line) - 1) + highlight)
 
 
-def _dump_dangling_whitespace_run(result: list, dangling_whitespace_run: collections.deque):
+def _dump_dangling_whitespace_run(result: list, dangling_whitespace_run: collections.deque) -> None:
+    """Dump the dangling whitespace run to the result."""
     while dangling_whitespace_run:
         old_line = dangling_whitespace_run.popleft()
         result.append(old_line)
