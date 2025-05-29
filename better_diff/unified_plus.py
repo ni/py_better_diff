@@ -1,5 +1,6 @@
 """A unified+ format based on the standard difflib.unified_diff."""
 
+import collections
 import difflib
 import typing
 
@@ -25,6 +26,8 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
         normalized_endings_a += newline_difference_message * (len(a) - len(normalized_endings_a))
         normalized_endings_b += newline_difference_message * (len(b) - len(normalized_endings_b))
 
+    dangling_whitespace_run = collections.deque()
+
     for line in difflib.unified_diff(
         a=normalized_endings_a.splitlines(),
         b=normalized_endings_b.splitlines(),
@@ -42,12 +45,45 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
                     new_line_is_last_line_without_whitespace,
                 ]
             ):
-                highlight = "^" * (len(last_line) - len(last_line.rstrip()))
-                result.append("?" + " " * (len(line) - 1) + highlight)
+                _highlight_dangling_whitespace(result, last_line, line)
+
+            elif dangling_whitespace_run and line.startswith("+"):
+                if line[1:].rstrip() == dangling_whitespace_run[0][1:].rstrip():
+                    old_line = dangling_whitespace_run.popleft()
+                    result.append(old_line)
+                    _highlight_dangling_whitespace(result, old_line, line)
+                    result.append(line)
+
+                    continue
+                else:
+                    _dump_dangling_whitespace_run(result, dangling_whitespace_run)
+
+            elif last_line_had_dangling_whitespace:
+                we_may_be_continuing = line.startswith("-")
+                if we_may_be_continuing:
+                    dangling_whitespace_run.append(line)
+                    continue  # don't print this one yet
+                else:
+                    _dump_dangling_whitespace_run(result, dangling_whitespace_run)
 
         result.append(line.rstrip())
         last_line = line
 
+    _dump_dangling_whitespace_run(result, dangling_whitespace_run)
+
     if not result:
         return ""
     return "\n".join(result) + "\n"
+
+
+def _highlight_dangling_whitespace(result, last_line, line):
+    """Insert a highlight line for dangling whitespace."""
+    highlight = "^" * (len(last_line) - len(last_line.rstrip()))
+    result.append("?" + " " * (len(line) - 1) + highlight)
+
+
+def _dump_dangling_whitespace_run(result: list, dangling_whitespace_run: collections.deque) -> None:
+    """Dump the dangling whitespace run to the result."""
+    while dangling_whitespace_run:
+        old_line = dangling_whitespace_run.popleft()
+        result.append(old_line)
