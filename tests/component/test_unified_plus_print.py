@@ -8,7 +8,11 @@ import better_diff
 _MODULE_DIR = pathlib.Path(__file__).parent
 _TEST_CASES_DIR = _MODULE_DIR / "test_cases"
 
-_TEST_CASES = [folder for folder in _TEST_CASES_DIR.iterdir() if folder.is_dir()]
+_TEST_CASES = [
+    folder
+    for folder in _TEST_CASES_DIR.iterdir()
+    if folder.is_dir() and (folder / "a.txt").exists() and (folder / "b.txt").exists()
+]
 
 
 @pytest.mark.parametrize("test_case", _TEST_CASES, ids=lambda o: o.name.replace("_", "-"))

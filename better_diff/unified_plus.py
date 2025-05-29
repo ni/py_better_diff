@@ -14,7 +14,7 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
         fromfile: The name of the first file.
         tofile: The name of the second file.
     """
-    result = []
+    result: typing.List[str] = []
     last_line: typing.Optional[str] = None
 
     normalized_endings_a, normalized_endings_b = (a.rstrip("\r\n"), b.rstrip("\r\n"))
@@ -26,7 +26,7 @@ def format_diff(a: str, b: str, fromfile: str = "a", tofile: str = "b") -> str:
         normalized_endings_a += newline_difference_message * (len(a) - len(normalized_endings_a))
         normalized_endings_b += newline_difference_message * (len(b) - len(normalized_endings_b))
 
-    dangling_whitespace_run = collections.deque()
+    dangling_whitespace_run: typing.Deque[str] = collections.deque()
 
     for line in difflib.unified_diff(
         a=normalized_endings_a.splitlines(),
